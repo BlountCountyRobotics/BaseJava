@@ -145,7 +145,7 @@ public class BaseDriveTrain {
 			CANTalon backLeft, CANTalon frontRight, 
 			CANTalon midRight, CANTalon backRight, double rpm)
 	{
-		this(frontLeft, backLeft, frontRight, backRight);
+		this(frontLeft, midLeft, backLeft, frontRight, midRight, backRight);
 		usingEncoders = true;
 		this.rpm = rpm;
 		for(int x = 0; x < motors.length; x++)
