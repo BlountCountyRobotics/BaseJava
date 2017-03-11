@@ -24,4 +24,26 @@ public class BCRAhrs extends AHRS{
 	{
 		super(spi_port, spi_bitrate, update_rate_hz);
 	}
+	
+	public double getRealAngle()
+	{
+		double angle = getAngle();
+		int revolutions = Math.abs((int) angle / 180);
+		if(angle < 0.0)
+		{
+			angle += revolutions * 180.0;
+			if(revolutions % 2 != 0)
+			{
+				angle = 180.0 + angle;
+			}
+		}else
+		{
+			angle -= revolutions * 180.0;
+			if(revolutions % 2 != 0)
+			{
+				angle = -180.0 + angle;
+			}
+		}
+		return angle;
+	}
 }
