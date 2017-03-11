@@ -53,34 +53,34 @@ public class BCRDriverStation extends Joystick
 	}
 	public JoystickButton getTopRightButton()
 	{
-		return new JoystickButton(this, 2);
+		return new JoystickButton(this, 4);
 	}
 	public JoystickButton getMidLeftButton()
 	{
-		return new JoystickButton(this, 2);
+		return new JoystickButton(this, 10);
 	}
 	public JoystickButton getMidMidButton()
 	{
-		return new JoystickButton(this, 2);
+		return new JoystickButton(this, 1);
 	}
 	public JoystickButton getMidRightButton()
 	{
-		return new JoystickButton(this, 2);
+		return new JoystickButton(this, 5);
 	}
 	public JoystickButton getBottomLeftButton()
 	{
-		return new JoystickButton(this, 2);
+		return new JoystickButton(this, 8);
 	}
 	public JoystickButton getBottomRightButton()
 	{
-		return new JoystickButton(this, 2);
+		return new JoystickButton(this, 11);
 	}
 	public JoystickButton getLeverForwardButton()
 	{
-		return new JoystickButton(this, 2);
+		return new JoystickButton(this, 6);
 	}
 	public JoystickButton getLeverBackButton()
 	{
-		return new JoystickButton(this, 2);
+		return new JoystickButton(this, 7);
 	}
 }
