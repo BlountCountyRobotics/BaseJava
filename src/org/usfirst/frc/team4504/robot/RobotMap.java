@@ -22,7 +22,7 @@ public class RobotMap {
 		public static final int quadrature = 1;
 		public static final int analog = 2;
 	}
-	
+	// for four or six wheels
 	public static final boolean frontLeftInverted = false;
 	public static final boolean midLeftInverted = false;
 	public static final boolean backLeftInverted = false;
@@ -36,4 +36,11 @@ public class RobotMap {
 	public static final boolean frontRightEncInverted = false;
 	public static final boolean midRightEncInverted = false;
 	public static final boolean backRightEncInverted = false;
+	
+	//for two wheels
+	public static final boolean leftInverted = false;
+	public static final boolean rightInverted = false;
+
+	public static final boolean leftEncInverted = false;
+	public static final boolean rightEncInverted = false;
 }
