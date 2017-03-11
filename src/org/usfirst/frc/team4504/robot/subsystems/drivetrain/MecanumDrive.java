@@ -17,17 +17,8 @@ public class MecanumDrive extends BaseDriveTrain {
 		super(frontLeft, backLeft, frontRight, backRight);
 		usingGyro = false;
 	}
-	public MecanumDrive(CANTalon frontLeft, CANTalon backLeft, CANTalon frontRight, CANTalon backRight, double rpm) {
-		super(frontLeft, backLeft, frontRight, backRight, rpm);
-		usingGyro = false;
-	}
 	public MecanumDrive(CANTalon frontLeft, CANTalon backLeft, CANTalon frontRight, CANTalon backRight, BCRGyro gyro) {
 		super(frontLeft, backLeft, frontRight, backRight);
-		this.gyro = gyro;
-		usingGyro = true;
-	}
-	public MecanumDrive(CANTalon frontLeft, CANTalon backLeft, CANTalon frontRight, CANTalon backRight, BCRGyro gyro, double rpm) {
-		super(frontLeft, backLeft, frontRight, backRight, rpm);
 		this.gyro = gyro;
 		usingGyro = true;
 	}

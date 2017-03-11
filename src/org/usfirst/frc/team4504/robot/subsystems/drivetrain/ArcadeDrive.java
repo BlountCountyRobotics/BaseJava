@@ -12,24 +12,10 @@ public class ArcadeDrive extends BaseDriveTrain{
 		super(left, right);
 	}
 	
-	public ArcadeDrive(CANTalon left, CANTalon right, double rpm)
-	{
-		super(left, right, rpm);
-	}
 	
-	public ArcadeDrive(CANTalon frontLeft, 
-			CANTalon backLeft, CANTalon frontRight, 
-			CANTalon backRight, double rpm) {
-		super(frontLeft, backLeft, frontRight,  backRight, rpm);
-	}
 	public ArcadeDrive(CANTalon frontLeft, CANTalon backLeft, 
 			CANTalon frontRight, CANTalon backRight) {
 		super(frontLeft,  backLeft, frontRight, backRight);
-	}
-	public ArcadeDrive(CANTalon frontLeft, CANTalon midLeft, 
-			CANTalon backLeft, CANTalon frontRight, 
-			CANTalon midRight, CANTalon backRight, double rpm) {
-		super(frontLeft, midLeft, backLeft, frontRight, midRight, backRight, rpm);
 	}
 	public ArcadeDrive(CANTalon frontLeft, CANTalon midLeft, 
 			CANTalon backLeft, CANTalon frontRight, 

@@ -1,9 +1,5 @@
 package org.usfirst.frc.team4504.robot.subsystems.drivetrain;
 
-
-import org.usfirst.frc.team4504.robot.RobotMap;
-import org.usfirst.frc.team4504.robot.RobotMap.EncoderType;
-
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
@@ -76,48 +72,6 @@ public class BaseDriveTrain {
 		}
 	}
 	
-	@SuppressWarnings("unused")
-	public BaseDriveTrain(CANTalon left, CANTalon right, double rpm)
-	{
-		this(left, right);
-		usingEncoders = true;
-		this.rpm = rpm;
-		setEncInverted(RobotMap.frontLeftEncInverted, RobotMap.backLeftEncInverted, 
-				RobotMap.frontRightEncInverted, RobotMap.backRightEncInverted);
-		for(int x = 0; x < motors.length; x++)
-		{
-			if(RobotMap.encoderType == EncoderType.quadrature)
-			{
-				motors[x].setFeedbackDevice(FeedbackDevice.QuadEncoder); // assuming quad encoders
-				motors[x].configEncoderCodesPerRev(RobotMap.pulsesPerRev);
-			}else if(RobotMap.encoderType == EncoderType.analog)
-			{
-				motors[x].setFeedbackDevice(FeedbackDevice.AnalogEncoder);
-			}
-		}
-		
-		
-		// set these as constants before driving, using the manual
-		motors[Motors.frontLeft].setP(0.0);
-		motors[Motors.frontLeft].setI(0.0);
-		motors[Motors.frontLeft].setD(0.0);
-		motors[Motors.frontLeft].setF(0.0);
-
-		motors[Motors.frontRight].setP(0.0);
-		motors[Motors.frontRight].setI(0.0);
-		motors[Motors.frontRight].setD(0.0);
-		motors[Motors.frontRight].setF(0.0);
-	
-		motors[Motors.backLeft].setP(0.0);
-		motors[Motors.backLeft].setI(0.0);
-		motors[Motors.backLeft].setD(0.0);
-		motors[Motors.backLeft].setF(0.0);
-		
-		motors[Motors.backRight].setP(0.0);
-		motors[Motors.backRight].setI(0.0);
-		motors[Motors.backRight].setD(0.0);
-		motors[Motors.backRight].setF(0.0);
-	}
 	
 	public BaseDriveTrain(CANTalon frontLeft, CANTalon backLeft, 
 			CANTalon frontRight, CANTalon backRight)
@@ -133,8 +87,6 @@ public class BaseDriveTrain {
 		
 		inverted = new int[] {1,1,1,1};
 		
-		setInverted(RobotMap.frontLeftInverted, RobotMap.backLeftInverted, 
-				RobotMap.frontRightInverted, RobotMap.backRightInverted);
 		
 		for(int x = 0; x < motors.length; x++)
 		{
@@ -144,50 +96,6 @@ public class BaseDriveTrain {
 				throw new NullPointerException("Motors inputted to DriveTrain cannot be null");
 			}
 		}
-	}
-	
-	@SuppressWarnings("unused")
-	public BaseDriveTrain(CANTalon frontLeft, CANTalon backLeft, 
-			CANTalon frontRight, CANTalon backRight, double rpm)
-	{
-		this(frontLeft, backLeft, frontRight, backRight);
-		usingEncoders = true;
-		this.rpm = rpm;
-		setEncInverted(RobotMap.frontLeftEncInverted, RobotMap.backLeftEncInverted, 
-				RobotMap.frontRightEncInverted, RobotMap.backRightEncInverted);
-		for(int x = 0; x < motors.length; x++)
-		{
-			if(RobotMap.encoderType == EncoderType.quadrature)
-			{
-				motors[x].setFeedbackDevice(FeedbackDevice.QuadEncoder); // assuming quad encoders
-				motors[x].configEncoderCodesPerRev(RobotMap.pulsesPerRev);
-			}else if(RobotMap.encoderType == EncoderType.analog)
-			{
-				motors[x].setFeedbackDevice(FeedbackDevice.AnalogEncoder);
-			}
-		}
-		
-		
-		// set these as constants before driving, using the manual
-		motors[Motors.frontLeft].setP(0.0);
-		motors[Motors.frontLeft].setI(0.0);
-		motors[Motors.frontLeft].setD(0.0);
-		motors[Motors.frontLeft].setF(0.0);
-
-		motors[Motors.frontRight].setP(0.0);
-		motors[Motors.frontRight].setI(0.0);
-		motors[Motors.frontRight].setD(0.0);
-		motors[Motors.frontRight].setF(0.0);
-	
-		motors[Motors.backLeft].setP(0.0);
-		motors[Motors.backLeft].setI(0.0);
-		motors[Motors.backLeft].setD(0.0);
-		motors[Motors.backLeft].setF(0.0);
-		
-		motors[Motors.backRight].setP(0.0);
-		motors[Motors.backRight].setI(0.0);
-		motors[Motors.backRight].setD(0.0);
-		motors[Motors.backRight].setF(0.0);
 	}
 	
 
@@ -208,10 +116,6 @@ public class BaseDriveTrain {
 		
 		inverted = new int[] {1,1,1,1,1,1};
 		
-
-		setInverted(RobotMap.frontLeftInverted, RobotMap.midLeftInverted,
-				RobotMap.backLeftInverted, 	RobotMap.frontRightInverted, 
-				RobotMap.midRightInverted, RobotMap.backRightInverted);
 		
 		for(int x = 0; x < motors.length; x++)
 		{
@@ -223,63 +127,6 @@ public class BaseDriveTrain {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	public BaseDriveTrain(CANTalon frontLeft, CANTalon midLeft, 
-			CANTalon backLeft, CANTalon frontRight, 
-			CANTalon midRight, CANTalon backRight, double rpm)
-	{
-		this(frontLeft, midLeft, backLeft, frontRight, midRight, backRight);
-		usingEncoders = true;
-		this.rpm = rpm;
-		
-		setEncInverted(RobotMap.frontLeftEncInverted, RobotMap.midLeftEncInverted, 
-				RobotMap.backLeftEncInverted, RobotMap.frontRightEncInverted, 
-				RobotMap.midRightEncInverted, RobotMap.backRightEncInverted);
-		
-		for(int x = 0; x < motors.length; x++)
-		{
-			if(RobotMap.encoderType == EncoderType.quadrature)
-			{
-				motors[x].setFeedbackDevice(FeedbackDevice.QuadEncoder); // assuming quad encoders
-				motors[x].configEncoderCodesPerRev(RobotMap.pulsesPerRev);
-			}else if(RobotMap.encoderType == EncoderType.analog)
-			{
-				motors[x].setFeedbackDevice(FeedbackDevice.AnalogEncoder);
-			}
-		}
-		
-		
-		// set these as constants before driving, using the manual
-		motors[Motors.frontLeft].setP(0.0);
-		motors[Motors.frontLeft].setI(0.0);
-		motors[Motors.frontLeft].setD(0.0);
-		motors[Motors.frontLeft].setF(0.0);
-
-		motors[Motors.frontRight].setP(0.0);
-		motors[Motors.frontRight].setI(0.0);
-		motors[Motors.frontRight].setD(0.0);
-		motors[Motors.frontRight].setF(0.0);
-	
-		motors[Motors.backLeft].setP(0.0);
-		motors[Motors.backLeft].setI(0.0);
-		motors[Motors.backLeft].setD(0.0);
-		motors[Motors.backLeft].setF(0.0);
-		
-		motors[Motors.backRight].setP(0.0);
-		motors[Motors.backRight].setI(0.0);
-		motors[Motors.backRight].setD(0.0);
-		motors[Motors.backRight].setF(0.0);
-		
-		motors[Motors.midLeft].setP(0.0);
-		motors[Motors.midLeft].setI(0.0);
-		motors[Motors.midLeft].setD(0.0);
-		motors[Motors.midLeft].setF(0.0);
-		
-		motors[Motors.midRight].setP(0.0);
-		motors[Motors.midRight].setI(0.0);
-		motors[Motors.midRight].setD(0.0);
-		motors[Motors.midRight].setF(0.0);
-	}
 	
 	
 	// Adapted from RobotDrive
@@ -356,13 +203,13 @@ public class BaseDriveTrain {
 		{
 			for(int x = 0; x < motors.length; x++)
 			{
-				motors[x].changeControlMode(TalonControlMode.Speed);
+				motors[x].changeControlMode(TalonControlMode.Speed); // motor output in rpms
 			}
 		}else
 		{
 			for(int x = 0; x < motors.length; x++)
 			{
-				motors[x].changeControlMode(TalonControlMode.PercentVbus);
+				motors[x].changeControlMode(TalonControlMode.PercentVbus); // motor output in %
 			}
 		}
 	}
@@ -385,133 +232,16 @@ public class BaseDriveTrain {
 		return numMotors;
 	}
 	
-	public void setInverted(boolean frontLeft, boolean backLeft, 
-			boolean frontRight, boolean backRight)
+	public void setInverted(int motor, boolean inverted)
 	{
-		setFrontLeftInverted(frontLeft);
-		setBackLeftInverted(backLeft);
-		setFrontRightInverted(frontRight);
-		setBackRightInverted(backRight);
+		if(motor < numMotors)
+			this.inverted[motor] = inverted ? -1 : 1;
 	}
 	
-	public void setInverted(boolean frontLeft, boolean midLeft, 
-			boolean backLeft, boolean frontRight,
-			boolean midRight, boolean backRight)
+	public void setEncInverted(int motor, boolean inverted)
 	{
-		setInverted(frontLeft, backLeft, frontRight, backRight);
-		setMidRightInverted(midRight);
-		setMidLeftInverted(midLeft);
-	}
-	
-	public void setFrontLeftInverted(boolean inverted)
-	{
-		this.inverted[Motors.frontLeft] = inverted ? -1 : 1;
-	}
-	
-	public void setBackLeftInverted(boolean inverted)
-	{
-		this.inverted[Motors.backLeft] = inverted ? -1 : 1;
-	}
-	
-	public void setMidLeftInverted(boolean inverted)
-	{
-		if(driveType == DriveType.sixWheel)
-			this.inverted[Motors.midLeft] = inverted ? -1 : 1;
-	}
-	
-	public void setBackRightInverted(boolean inverted)
-	{
-		this.inverted[Motors.backRight] = inverted ? -1 : 1;
-	}
-	
-	public void setMidRightInverted(boolean inverted)
-	{
-		if(driveType == DriveType.sixWheel)
-			this.inverted[Motors.midRight] = inverted ? -1 : 1;
-	}
-	
-	public void setFrontRightInverted(boolean inverted)
-	{
-		this.inverted[Motors.frontRight] = inverted ? -1 : 1;
-	}
-	
-	public void setEncInverted(boolean frontLeft, boolean backLeft, 
-			boolean frontRight, boolean backRight)
-	{
-		if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
-		{
-			setFrontLeftEncInverted(frontLeft);
-			setBackLeftEncInverted(backLeft);
-			setFrontRightEncInverted(frontRight);
-			setBackRightEncInverted(backRight);
-		}
-	}
-	
-	public void setEncInverted(boolean frontLeft, boolean midLeft, 
-			boolean backLeft, boolean frontRight,
-			boolean midRight, boolean backRight)
-	{
-		if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
-		{
-			setEncInverted(frontLeft, backLeft, frontRight, backRight);
-			setMidRightEncInverted(midRight);
-			if(driveType == DriveType.sixWheel)
-				setMidLeftEncInverted(midLeft);
-		}
-	}
-	
-	public void setFrontLeftEncInverted(boolean inverted)
-	{
-		if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
-			this.motors[Motors.frontLeft].reverseSensor(inverted);
-	}
-	
-	public void setBackLeftEncInverted(boolean inverted)
-	{
-		if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
-			this.motors[Motors.backLeft].reverseSensor(inverted);
-	}
-	
-	public void setMidLeftEncInverted(boolean inverted)
-	{
-		if(driveType == DriveType.sixWheel)
-			this.motors[Motors.midLeft].reverseSensor(inverted);
-	}
-	
-	public void setBackRightEncInverted(boolean inverted)
-	{
-		if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
-			this.motors[Motors.backRight].reverseSensor(inverted);
-	}
-	
-	public void setMidRightEncInverted(boolean inverted)
-	{
-		if(driveType == DriveType.sixWheel)
-			this.motors[Motors.midRight].reverseSensor(inverted);
-	}
-	
-	public void setFrontRightEncInverted(boolean inverted)
-	{
-		if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
-			this.motors[Motors.frontRight].reverseSensor(inverted);
-	}
-	
-	public void setLeftInverted(boolean inverted)
-	{
-		this.inverted[Motors.left] = inverted ? -1 : 1;
-	}
-	public void setRightInverted(boolean inverted)
-	{
-		this.inverted[Motors.right] = inverted ? -1 : 1;
-	}
-	
-	public void setLeftEncInverted(boolean inverted)
-	{
-		this.motors[Motors.left].reverseSensor(inverted);
-	}
-	public void setRightEncInverted(boolean inverted)
-	{
-		this.motors[Motors.right].reverseSensor(inverted);
+		if(motor < numMotors)
+			motors[motor].reverseSensor(inverted);
 	}
 	
 	public boolean getInverted(int motor)
@@ -582,6 +312,21 @@ public class BaseDriveTrain {
 	{
 		this.joystickInputSquared = joystickInputSquared;
 	}
-
+	public void setMaxRpm(double rpm)
+	{
+		this.rpm = rpm;
+	}
+	public double getMaxRpm()
+	{
+		return rpm;
+	}
+	
+	public void setEncoder(FeedbackDevice encoder)
+	{
+		for(int x = 0; x < motors.length; x++)
+		{
+			motors[x].setFeedbackDevice(encoder);
+		}
+	}
 }
 
