@@ -37,6 +37,11 @@ public class ArcadeDrive extends BaseDriveTrain{
 			rotate = squareWithSign(rotate);
 		}
 		
+		if(triggerIncreasesSpeed)
+		{
+			move = effectWithTrigger(move, controller);
+			rotate = effectWithTrigger(rotate, controller);
+		}
 		arcadeDrive(move, rotate);
 	}
 	

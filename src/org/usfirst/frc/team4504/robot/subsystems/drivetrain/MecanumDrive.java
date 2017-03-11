@@ -45,6 +45,14 @@ public class MecanumDrive extends BaseDriveTrain {
 			y = squareWithSign(y);
 			rotation = squareWithSign(rotation);
 		}
+		
+		if(triggerIncreasesSpeed)
+		{
+			x = effectWithTrigger(x, controller);
+			y = effectWithTrigger(y, controller);
+			rotation = effectWithTrigger(rotation, controller);
+		}
+		
 		mecanumDrive(x, y, rotation);
 	}
 	

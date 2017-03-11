@@ -41,20 +41,22 @@ public class BCRXbox extends XboxController {
 	{
 		return new JoystickButton(this, 7);
 	}
-	public JoystickButton getLeftBumperJoystickButton()
+	public JoystickButton getBumperJoystickButton(Hand hand)
 	{
-		return new JoystickButton(this, 5);
+		if(hand.value == Hand.kLeft.value)
+			return new JoystickButton(this, 5);
+		if(hand.value == Hand.kRight.value)
+			return new JoystickButton(this, 6);
+		
+		return null;
 	}
-	public JoystickButton getRightBumperJoystickButton()
+	public JoystickButton getStickJoystickButton(Hand hand)
 	{
-		return new JoystickButton(this, 6);
-	}
-	public JoystickButton getLeftClickJoystickButton()
-	{
-		return new JoystickButton(this, 9);
-	}
-	public JoystickButton getRightClickJoystickButton()
-	{
-		return new JoystickButton(this, 10);
+		if(hand.value == Hand.kLeft.value)
+			return new JoystickButton(this, 9);
+		if(hand.value == Hand.kRight.value)
+			return new JoystickButton(this, 10);
+		
+		return null;
 	}
 }

@@ -33,6 +33,13 @@ public class TankDrive extends BaseDriveTrain {
 			left = squareWithSign(left);
 			right = squareWithSign(right);
 		}
+		
+		if(triggerIncreasesSpeed)
+		{
+			left = effectWithTrigger(left, controller);
+			right = effectWithTrigger(right, controller);
+		}
+		
 		tankDrive(left, right);
 	}
 	

@@ -1,8 +1,12 @@
 package org.usfirst.frc.team4504.robot.subsystems.drivetrain;
 
+import org.usfirst.frc.team4504.robot.objects.BCRXbox;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 
 /**
@@ -42,7 +46,10 @@ public class BaseDriveTrain {
 		public static final int midLeft = 5;
 	}
 
-	protected boolean joystickInputSquared;
+	protected boolean triggerIncreasesSpeed = true;
+	protected double eachTriggerEffect = .2;
+	
+	protected boolean joystickInputSquared = true;
 	protected int driveType;
 	protected CANTalon[] motors;
 	protected boolean usingEncoders;
@@ -327,6 +334,37 @@ public class BaseDriveTrain {
 		{
 			motors[x].setFeedbackDevice(encoder);
 		}
+	}
+	public boolean triggerIncreasesSpeed()
+	{
+		return triggerIncreasesSpeed;
+	}
+	
+	public void setTriggerIncreasesSpeed(boolean doesTriggerIncreaseSpeed)
+	{
+		this.triggerIncreasesSpeed = doesTriggerIncreaseSpeed;
+	}
+	public double getEachTriggerEffect()
+	{
+		return eachTriggerEffect;
+	}
+	public void setEachTriggerEffect(double eachTriggerEffect)
+	{
+		this.eachTriggerEffect = eachTriggerEffect;
+	}
+	
+	protected double effectWithTrigger(double input, BCRXbox controller)
+	{
+		double factor = 1.0;
+		factor -= 2 * eachTriggerEffect; // there are two triggers
+
+		if(controller.getTriggerAxis(Hand.kLeft) >= .75)
+			factor += eachTriggerEffect;		
+		if(controller.getTriggerAxis(Hand.kRight) >= .75)
+			factor += eachTriggerEffect;
+		
+		factor = limit(factor); //make sure it isn't below 0.0
+		return input * factor;
 	}
 }
 
