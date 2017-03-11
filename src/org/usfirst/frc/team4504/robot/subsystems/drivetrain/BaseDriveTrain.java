@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4504.robot.subsystems.drivetrain;
 
+
 import org.usfirst.frc.team4504.robot.RobotMap;
 import org.usfirst.frc.team4504.robot.RobotMap.EncoderType;
 
@@ -60,6 +61,9 @@ public class BaseDriveTrain {
 		
 		inverted = new int[] {1,1,1,1};
 		
+		setInverted(RobotMap.frontLeftInverted, RobotMap.backLeftInverted, 
+				RobotMap.frontRightInverted, RobotMap.backRightInverted);
+		
 		for(int x = 0; x < motors.length; x++)
 		{
 			if(motors[x] == null)
@@ -77,6 +81,8 @@ public class BaseDriveTrain {
 		this(frontLeft, backLeft, frontRight, backRight);
 		usingEncoders = true;
 		this.rpm = rpm;
+		setEncInverted(RobotMap.frontLeftEncInverted, RobotMap.backLeftEncInverted, 
+				RobotMap.frontRightEncInverted, RobotMap.backRightEncInverted);
 		for(int x = 0; x < motors.length; x++)
 		{
 			if(RobotMap.encoderType == EncoderType.quadrature)
@@ -130,6 +136,11 @@ public class BaseDriveTrain {
 		
 		inverted = new int[] {1,1,1,1,1,1};
 		
+
+		setInverted(RobotMap.frontLeftInverted, RobotMap.midLeftInverted,
+				RobotMap.backLeftInverted, 	RobotMap.frontRightInverted, 
+				RobotMap.midRightInverted, RobotMap.backRightInverted);
+		
 		for(int x = 0; x < motors.length; x++)
 		{
 			if(motors[x] == null)
@@ -148,6 +159,11 @@ public class BaseDriveTrain {
 		this(frontLeft, midLeft, backLeft, frontRight, midRight, backRight);
 		usingEncoders = true;
 		this.rpm = rpm;
+		
+		setEncInverted(RobotMap.frontLeftEncInverted, RobotMap.midLeftEncInverted, 
+				RobotMap.backLeftEncInverted, RobotMap.frontRightEncInverted, 
+				RobotMap.midRightEncInverted, RobotMap.backRightEncInverted);
+		
 		for(int x = 0; x < motors.length; x++)
 		{
 			if(RobotMap.encoderType == EncoderType.quadrature)
@@ -332,6 +348,66 @@ public class BaseDriveTrain {
 	public void setFrontRightInverted(boolean inverted)
 	{
 		this.inverted[Motors.frontRight] = inverted ? -1 : 1;
+	}
+	
+	public void setEncInverted(boolean frontLeft, boolean backLeft, 
+			boolean frontRight, boolean backRight)
+	{
+		setFrontLeftEncInverted(frontLeft);
+		setBackLeftEncInverted(backLeft);
+		setFrontRightEncInverted(frontRight);
+		setBackRightEncInverted(backRight);
+	}
+	
+	public void setEncInverted(boolean frontLeft, boolean midLeft, 
+			boolean backLeft, boolean frontRight,
+			boolean midRight, boolean backRight)
+	{
+		setEncInverted(frontLeft, backLeft, frontRight, backRight);
+		setMidRightEncInverted(midRight);
+		setMidLeftEncInverted(midLeft);
+	}
+	
+	public void setFrontLeftEncInverted(boolean inverted)
+	{
+		this.motors[Motors.frontLeft].reverseSensor(inverted);;
+	}
+	
+	public void setBackLeftEncInverted(boolean inverted)
+	{
+		this.motors[Motors.backLeft].reverseSensor(inverted);;
+	}
+	
+	public void setMidLeftEncInverted(boolean inverted)
+	{
+		if(driveType == DriveType.sixWheel)
+			this.motors[Motors.midLeft].reverseSensor(inverted);;
+	}
+	
+	public void setBackRightEncInverted(boolean inverted)
+	{
+		this.motors[Motors.backRight].reverseSensor(inverted);;
+	}
+	
+	public void setMidRightEncInverted(boolean inverted)
+	{
+		if(driveType == DriveType.sixWheel)
+			this.motors[Motors.midRight].reverseSensor(inverted);;
+	}
+	
+	public void setFrontRightEncInverted(boolean inverted)
+	{
+		this.motors[Motors.frontRight].reverseSensor(inverted);;
+	}
+	
+	
+	public boolean getInverted(int motor)
+	{
+		if(motor < numMotors)
+		{
+			return inverted[motor] == -1;
+		}
+		return false;
 	}
 	
 	public int[] getInverted()
