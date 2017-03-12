@@ -1,6 +1,11 @@
 
 package org.usfirst.frc.team4504.robot;
 
+import org.usfirst.frc.team4504.robot.objects.BCRAHRS;
+import org.usfirst.frc.team4504.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4504.robot.subsystems.drivetrain.BaseDriveTrain.DriveType;
+import org.usfirst.frc.team4504.robot.subsystems.drivetrain.BaseDriveTrain.Motors;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,7 +27,10 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-
+	
+	BCRAHRS ahrs;
+	DriveTrain driveTrain = new DriveTrain();
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -30,6 +38,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		ahrs = new BCRAHRS(RobotMap.ahrsPort);
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -82,6 +91,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		sendSmartDashboardValues();
 	}
 
 	@Override
@@ -100,6 +110,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		sendSmartDashboardValues();
 	}
 
 	/**
@@ -108,5 +119,71 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
+	}
+	
+	private void sendSmartDashboardValues()
+	{
+		int driveType = driveTrain.getDriveType();
+		if(RobotMap.encodersAvailable)
+		{
+			if(driveType == DriveType.twoWheel)
+			{
+				SmartDashboard.putNumber("Left side RPM", 
+						driveTrain.getMotorRPM(Motors.left));
+				SmartDashboard.putNumber("Right side RPM", 
+						driveTrain.getMotorRPM(Motors.right));
+			}else if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
+			{
+				SmartDashboard.putNumber("Front left RPM", 
+						driveTrain.getMotorRPM(Motors.frontLeft));
+				SmartDashboard.putNumber("Front right RPM", 
+						driveTrain.getMotorRPM(Motors.frontRight));
+				SmartDashboard.putNumber("Back left RPM", 
+						driveTrain.getMotorRPM(Motors.backLeft));
+				SmartDashboard.putNumber("Back right RPM", 
+						driveTrain.getMotorRPM(Motors.backRight));
+				if(driveType == DriveType.sixWheel)
+				{
+					SmartDashboard.putNumber("Middle left RPM", 
+							driveTrain.getMotorRPM(Motors.midLeft));
+					SmartDashboard.putNumber("Middle right RPM", 
+							driveTrain.getMotorRPM(Motors.midRight));
+				}
+			}
+		}
+		if(driveType == DriveType.twoWheel)
+		{
+			SmartDashboard.putNumber("Left side output", 
+					driveTrain.getMotorOutput(Motors.left));
+			SmartDashboard.putNumber("Right side output", 
+					driveTrain.getMotorOutput(Motors.right));
+		}else if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
+		{
+			SmartDashboard.putNumber("Front left output", 
+					driveTrain.getMotorOutput(Motors.frontLeft));
+			SmartDashboard.putNumber("Front right output", 
+					driveTrain.getMotorOutput(Motors.frontRight));
+			SmartDashboard.putNumber("Back left output", 
+					driveTrain.getMotorOutput(Motors.backLeft));
+			SmartDashboard.putNumber("Back right output", 
+					driveTrain.getMotorOutput(Motors.backRight));
+			if(driveType == DriveType.sixWheel)
+			{
+				SmartDashboard.putNumber("Middle left output", 
+						driveTrain.getMotorOutput(Motors.midLeft));
+				SmartDashboard.putNumber("Middle right output", 
+						driveTrain.getMotorOutput(Motors.midRight));
+			}
+		}
+		SmartDashboard.putBoolean("isMagneticDisturbance()", ahrs.isMagneticDisturbance());
+		SmartDashboard.putBoolean("isConnected()", ahrs.isConnected());
+		SmartDashboard.putNumber("Gyro angle", ahrs.getRealAngle());
+		SmartDashboard.putNumber("Gyro rate", ahrs.getRate());
+		SmartDashboard.putNumber("Gyro offset", ahrs.getAngleAdjustment());
+		SmartDashboard.putNumber("X acceleration", ahrs.getWorldLinearAccelX());
+		SmartDashboard.putNumber("Y acceleration", ahrs.getWorldLinearAccelY());
+		SmartDashboard.putNumber("Z acceleration", ahrs.getWorldLinearAccelZ());
+		SmartDashboard.putNumber("Pitch", ahrs.getPitch());
+		SmartDashboard.putNumber("Roll", ahrs.getRoll());
 	}
 }

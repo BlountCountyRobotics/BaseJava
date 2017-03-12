@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4504.robot;
 
+import edu.wpi.first.wpilibj.SPI.Port;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -14,7 +16,11 @@ public class RobotMap {
 	public static final int frontLeft = 2;
 	public static final int backLeft = 3;
 	
+	// Ports:
+	public static final Port ahrsPort = Port.kOnboardCS0;
+	
 	// Global variables:
+	public static final boolean encodersAvailable = false;
 	public static final int encoderType = 0;
 	public static final int pulsesPerRev = 128;
 	public class EncoderType
