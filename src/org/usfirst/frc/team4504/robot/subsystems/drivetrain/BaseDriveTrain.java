@@ -7,10 +7,12 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 
 /**
- * This is the base drive train for 4504's robots
+ * This is the base drive train class for 
+ * 4504's robots
  * 
  * This accepts 4 or 6 CANTalons, but 
  * provides only bare bones methods for 
@@ -19,8 +21,11 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  * Use the subsystems which extend this 
  * class to actually use the drive train
  * 
+ * Extend whichever desired class to quickly
+ * create a functional drive train
+ * 
  */
-public class BaseDriveTrain {
+public abstract class BaseDriveTrain extends Subsystem {
 	
 	public class DriveType
 	{
@@ -134,7 +139,15 @@ public class BaseDriveTrain {
 		}
 	}
 
-	
+	protected boolean nullMotorCheck()
+	{
+		for(int x = 0; x < motors.length; x++)
+		{
+			if(motors[x] == null)
+				return true;
+		}
+		return false;
+	}
 	
 	// Adapted from RobotDrive
 	public void drive(double input, double curve)
@@ -177,6 +190,10 @@ public class BaseDriveTrain {
 	
 	public void setLeftRight(double left, double right)
 	{
+		if(nullMotorCheck() == true)
+		{
+			throw new NullPointerException("CANTalon motors cannot be null.");
+		}
 		setTalonControlMode();
 		double trueRightOutput = limit(right);
 		double trueLeftOutput = limit(left);
@@ -335,6 +352,13 @@ public class BaseDriveTrain {
 			motors[x].setFeedbackDevice(encoder);
 		}
 	}
+	public void setEncoderPulseRate(int pulseRate)
+	{
+		for(int x = 0; x < motors.length; x++)
+		{
+			motors[x].configEncoderCodesPerRev(pulseRate);
+		}
+	}
 	public boolean triggerIncreasesSpeed()
 	{
 		return triggerIncreasesSpeed;
@@ -367,4 +391,3 @@ public class BaseDriveTrain {
 		return input * factor;
 	}
 }
-

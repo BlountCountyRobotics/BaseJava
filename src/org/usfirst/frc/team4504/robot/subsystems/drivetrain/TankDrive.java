@@ -6,7 +6,12 @@ import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
-public class TankDrive extends BaseDriveTrain {
+/**
+ * Extend this class for a
+ * robot with tank drive
+ */
+
+public abstract class TankDrive extends BaseDriveTrain {
 
 	public TankDrive(CANTalon left, CANTalon right)
 	{

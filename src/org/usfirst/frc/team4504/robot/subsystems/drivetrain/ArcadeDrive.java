@@ -6,7 +6,12 @@ import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
-public class ArcadeDrive extends BaseDriveTrain{
+/**
+ * Extend this class for a
+ * robot with arcade drive
+ */
+
+public abstract class ArcadeDrive extends BaseDriveTrain {
 	public ArcadeDrive(CANTalon left, CANTalon right)
 	{
 		super(left, right);

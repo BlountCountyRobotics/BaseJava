@@ -7,7 +7,12 @@ import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
-public class MecanumDrive extends BaseDriveTrain {
+/**
+ * Extend this class for a 
+ * robot with mecanum drive
+ */
+ 
+public abstract class MecanumDrive extends BaseDriveTrain {
 	
 	private boolean usingGyro;
 	private BCRGyro gyro;
@@ -59,6 +64,10 @@ public class MecanumDrive extends BaseDriveTrain {
 	// Adapted from RobotDrive
 	public void mecanumDrive(double x, double y, double rotation)
 	{
+		if(nullMotorCheck() == true)
+		{
+			throw new NullPointerException("CANTalon motors cannot be null.");
+		}
 		double xInput = x;
 		double yInput = y;
 		yInput = -yInput;
