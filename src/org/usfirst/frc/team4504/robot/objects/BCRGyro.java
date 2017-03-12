@@ -1,6 +1,6 @@
 package org.usfirst.frc.team4504.robot.objects;
 
-/*
+/**
  * This class is to simplify the
  * fact that there can be either 
  * the AHRS or the ADXR gyroscope 
