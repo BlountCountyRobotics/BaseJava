@@ -1,8 +1,8 @@
 package org.usfirst.frc.team4504.robot.subsystems.drivetrain;
 
+import org.usfirst.frc.team4504.robot.objects.BCRTalon;
 import org.usfirst.frc.team4504.robot.objects.BCRXbox;
 
-import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -12,19 +12,19 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  */
 
 public abstract class ArcadeDrive extends BaseDriveTrain {
-	public ArcadeDrive(CANTalon left, CANTalon right)
+	public ArcadeDrive(BCRTalon left, BCRTalon right)
 	{
 		super(left, right);
 	}
 	
 	
-	public ArcadeDrive(CANTalon frontLeft, CANTalon backLeft, 
-			CANTalon frontRight, CANTalon backRight) {
+	public ArcadeDrive(BCRTalon frontLeft, BCRTalon backLeft, 
+			BCRTalon frontRight, BCRTalon backRight) {
 		super(frontLeft,  backLeft, frontRight, backRight);
 	}
-	public ArcadeDrive(CANTalon frontLeft, CANTalon midLeft, 
-			CANTalon backLeft, CANTalon frontRight, 
-			CANTalon midRight, CANTalon backRight) {
+	public ArcadeDrive(BCRTalon frontLeft, BCRTalon midLeft, 
+			BCRTalon backLeft, BCRTalon frontRight, 
+			BCRTalon midRight, BCRTalon backRight) {
 		super(frontLeft, midLeft, backLeft, frontRight, midRight, backRight);
 	}
 	

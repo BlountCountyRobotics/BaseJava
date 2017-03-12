@@ -1,10 +1,9 @@
 package org.usfirst.frc.team4504.robot.subsystems.drivetrain;
 
+import org.usfirst.frc.team4504.robot.objects.BCRTalon;
 import org.usfirst.frc.team4504.robot.objects.BCRXbox;
 
-import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
-import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,7 +21,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * class to actually use the drive train
  * 
  * Extend whichever desired class to quickly
- * create a functional drive train
+ * create a functional drive train. If desired,
+ * add encoders & set their parameters
  * 
  */
 public abstract class BaseDriveTrain extends Subsystem {
@@ -56,16 +56,17 @@ public abstract class BaseDriveTrain extends Subsystem {
 	
 	protected boolean joystickInputSquared = true;
 	protected int driveType;
-	protected CANTalon[] motors;
+	protected BCRTalon[] motors;
 	protected boolean usingEncoders;
 	protected double rpm;
 	protected int numMotors;
 	protected int[] inverted;
-	public BaseDriveTrain(CANTalon left, CANTalon right)
+	public BaseDriveTrain(BCRTalon left, BCRTalon right)
 	{
+		super();
 		driveType = DriveType.twoWheel;
 		numMotors = 2;
-		motors = new CANTalon[numMotors];
+		motors = new BCRTalon[numMotors];
 		usingEncoders = false;
 		motors[Motors.left] = left;
 		motors[Motors.right] = right;
@@ -85,12 +86,12 @@ public abstract class BaseDriveTrain extends Subsystem {
 	}
 	
 	
-	public BaseDriveTrain(CANTalon frontLeft, CANTalon backLeft, 
-			CANTalon frontRight, CANTalon backRight)
+	public BaseDriveTrain(BCRTalon frontLeft, BCRTalon backLeft, 
+			BCRTalon frontRight, BCRTalon backRight)
 	{
 		driveType = DriveType.fourWheel;
 		numMotors = 4;
-		motors = new CANTalon[numMotors];
+		motors = new BCRTalon[numMotors];
 		usingEncoders = false;
 		motors[Motors.backLeft] = backLeft;
 		motors[Motors.backRight] = backRight;
@@ -111,13 +112,13 @@ public abstract class BaseDriveTrain extends Subsystem {
 	}
 	
 
-	public BaseDriveTrain(CANTalon frontLeft, CANTalon midLeft, 
-			CANTalon backLeft, CANTalon frontRight, 
-			CANTalon midRight, CANTalon backRight)
+	public BaseDriveTrain(BCRTalon frontLeft, BCRTalon midLeft, 
+			BCRTalon backLeft, BCRTalon frontRight, 
+			BCRTalon midRight, BCRTalon backRight)
 	{
 		driveType = DriveType.sixWheel;
 		numMotors = 6;
-		motors = new CANTalon[numMotors];
+		motors = new BCRTalon[numMotors];
 		usingEncoders = false;
 		motors[Motors.backLeft] = backLeft;
 		motors[Motors.backRight] = backRight;
@@ -194,49 +195,48 @@ public abstract class BaseDriveTrain extends Subsystem {
 		{
 			throw new NullPointerException("CANTalon motors cannot be null.");
 		}
-		setTalonControlMode();
 		double trueRightOutput = limit(right);
 		double trueLeftOutput = limit(left);
 
 		if(usingEncoders)
 		{
-			trueRightOutput *= rpm; // scale -1.0 to 1.0 to being an rpm setpoint
-			trueLeftOutput *= rpm;
+			// Scale to rpm
+			trueRightOutput = trueRightOutput * rpm;
+			trueLeftOutput = trueLeftOutput * rpm;
 		}
 		if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
 		{
-			motors[Motors.backLeft].set(trueLeftOutput * inverted[Motors.backLeft]);
-			motors[Motors.frontLeft].set(trueLeftOutput * inverted[Motors.frontLeft]);
-			motors[Motors.backRight].set(trueRightOutput * inverted[Motors.backRight]);
-			motors[Motors.frontRight].set(trueRightOutput * inverted[Motors.frontRight]);
+			set(Motors.backLeft,trueLeftOutput * inverted[Motors.backLeft]);
+			set(Motors.frontLeft,trueLeftOutput * inverted[Motors.frontLeft]);
+			set(Motors.backRight,trueRightOutput * inverted[Motors.backRight]);
+			set(Motors.frontRight,trueRightOutput * inverted[Motors.frontRight]);
 			if(driveType == DriveType.sixWheel)
 			{
-				motors[Motors.midLeft].set(trueLeftOutput * inverted[Motors.midLeft]);
-				motors[Motors.midRight].set(trueRightOutput * inverted[Motors.midRight]);
+				set(Motors.midLeft,trueLeftOutput * inverted[Motors.midLeft]);
+				set(Motors.midRight,trueRightOutput * inverted[Motors.midRight]);
 			}
 		}else if(driveType == DriveType.twoWheel)
 		{
-			motors[Motors.left].set(trueLeftOutput * inverted[Motors.left]);
-			motors[Motors.right].set(trueRightOutput * inverted[Motors.right]);
+			set(Motors.left,trueLeftOutput * inverted[Motors.left]);
+			set(Motors.right,trueRightOutput * inverted[Motors.right]);
 		}
 	}
 	
-	protected void setTalonControlMode()
+	protected void set(int motor, double speed)
 	{
-		if(usingEncoders)
+		//assuming all units pre-scaled
+		if(motor < numMotors)
 		{
-			for(int x = 0; x < motors.length; x++)
+			if(usingEncoders)
 			{
-				motors[x].changeControlMode(TalonControlMode.Speed); // motor output in rpms
-			}
-		}else
-		{
-			for(int x = 0; x < motors.length; x++)
+				motors[motor].setRPM(speed);
+			}else
 			{
-				motors[x].changeControlMode(TalonControlMode.PercentVbus); // motor output in %
+				motors[motor].setPercent(speed);
 			}
 		}
 	}
+	
 	
 	public int getDriveType() {
 		return driveType;
@@ -352,13 +352,7 @@ public abstract class BaseDriveTrain extends Subsystem {
 			motors[x].setFeedbackDevice(encoder);
 		}
 	}
-	public void setEncoderPulseRate(int pulseRate)
-	{
-		for(int x = 0; x < motors.length; x++)
-		{
-			motors[x].configEncoderCodesPerRev(pulseRate);
-		}
-	}
+	
 	public boolean triggerIncreasesSpeed()
 	{
 		return triggerIncreasesSpeed;
@@ -389,5 +383,17 @@ public abstract class BaseDriveTrain extends Subsystem {
 		
 		factor = limit(factor); //make sure it isn't below 0.0
 		return input * factor;
+	}
+	public BCRTalon getMotor(int motor)
+	{
+		if(motor < numMotors)
+			return motors[motor];
+		return null;
+	}
+	public double getMotorRPM(int motor)
+	{
+		if(motor < numMotors)
+			return motors[motor].getRPM();
+		return 0.0;
 	}
 }

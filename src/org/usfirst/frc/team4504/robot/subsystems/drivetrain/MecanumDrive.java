@@ -1,9 +1,9 @@
 package org.usfirst.frc.team4504.robot.subsystems.drivetrain;
 
 import org.usfirst.frc.team4504.robot.objects.BCRGyro;
+import org.usfirst.frc.team4504.robot.objects.BCRTalon;
 import org.usfirst.frc.team4504.robot.objects.BCRXbox;
 
-import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -18,11 +18,11 @@ public abstract class MecanumDrive extends BaseDriveTrain {
 	private BCRGyro gyro;
 	
 	
-	public MecanumDrive(CANTalon frontLeft, CANTalon backLeft, CANTalon frontRight, CANTalon backRight) {
+	public MecanumDrive(BCRTalon frontLeft, BCRTalon backLeft, BCRTalon frontRight, BCRTalon backRight) {
 		super(frontLeft, backLeft, frontRight, backRight);
 		usingGyro = false;
 	}
-	public MecanumDrive(CANTalon frontLeft, CANTalon backLeft, CANTalon frontRight, CANTalon backRight, BCRGyro gyro) {
+	public MecanumDrive(BCRTalon frontLeft, BCRTalon backLeft, BCRTalon frontRight, BCRTalon backRight, BCRGyro gyro) {
 		super(frontLeft, backLeft, frontRight, backRight);
 		this.gyro = gyro;
 		usingGyro = true;
@@ -85,19 +85,19 @@ public abstract class MecanumDrive extends BaseDriveTrain {
 		speeds[Motors.backLeft] = -xInput + yInput + rotation;
 		speeds[Motors.backRight] = xInput + yInput - rotation;
 		normalize(speeds);
-		setTalonControlMode(); 
 		if(usingEncoders)
 		{
 			for(int i = 0; i < speeds.length; i++)
 			{
-				speeds[i] *= rpm;
+				// Convert to RPM then 
+				speeds[i] = speeds[i] * rpm;
 			}
 		}
 		
-		motors[Motors.frontRight].set(speeds[Motors.frontRight] * inverted[Motors.frontRight]);
-		motors[Motors.backRight].set(speeds[Motors.backRight] * inverted[Motors.backRight]);
-		motors[Motors.frontLeft].set(speeds[Motors.frontLeft] * inverted[Motors.frontLeft]);
-		motors[Motors.backLeft].set(speeds[Motors.backLeft] * inverted[Motors.backLeft]);
+		set(Motors.frontRight,speeds[Motors.frontRight] * inverted[Motors.frontRight]);
+		set(Motors.backRight,speeds[Motors.backRight] * inverted[Motors.backRight]);
+		set(Motors.frontLeft,speeds[Motors.frontLeft] * inverted[Motors.frontLeft]);
+		set(Motors.backLeft,speeds[Motors.backLeft] * inverted[Motors.backLeft]);
 	}
 	
 	public boolean usingGyro()
