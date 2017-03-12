@@ -396,4 +396,10 @@ public abstract class BaseDriveTrain extends Subsystem {
 			return motors[motor].getRPM();
 		return 0.0;
 	}
+	public double getMotorOutput(int motor)
+	{
+		if(motor < numMotors)
+			return motors[motor].getOutputVoltage() / motors[motor].getBusVoltage();
+		return 0.0;
+	}
 }
