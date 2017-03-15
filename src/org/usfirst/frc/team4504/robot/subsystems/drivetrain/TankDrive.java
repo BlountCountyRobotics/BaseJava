@@ -31,6 +31,11 @@ public abstract class TankDrive extends BaseDriveTrain {
 	
 	public void tankDrive(BCRXbox controller)
 	{
+		input(controller);
+	}
+	
+	public void input(BCRXbox controller)
+	{
 		double left = controller.getX(Hand.kLeft);
 		double right = controller.getX(Hand.kRight);
 		if(joystickInputSquared)

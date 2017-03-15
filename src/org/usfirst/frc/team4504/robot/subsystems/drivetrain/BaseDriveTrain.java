@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * add encoders & set their parameters
  * 
  */
-public abstract class BaseDriveTrain extends Subsystem {
+public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTrain {
 	
 	public class DriveType
 	{
@@ -74,7 +74,6 @@ public abstract class BaseDriveTrain extends Subsystem {
 		inverted = new int[] {1,1};
 		
 		
-		
 		for(int x = 0; x < motors.length; x++)
 		{
 			if(motors[x] == null)
@@ -112,6 +111,7 @@ public abstract class BaseDriveTrain extends Subsystem {
 	}
 	
 
+	
 	public BaseDriveTrain(BCRTalon frontLeft, BCRTalon midLeft, 
 			BCRTalon backLeft, BCRTalon frontRight, 
 			BCRTalon midRight, BCRTalon backRight)
@@ -222,6 +222,14 @@ public abstract class BaseDriveTrain extends Subsystem {
 		}
 	}
 	
+	public void stop()
+	{
+		for(int x = 0; x < motors.length; x++)
+		{
+			motors[x].set(0.0);
+		}
+	}
+	
 	protected void set(int motor, double speed)
 	{
 		//assuming all units pre-scaled
@@ -328,11 +336,11 @@ public abstract class BaseDriveTrain extends Subsystem {
 		return output;
 	}
 	
-	public boolean joystickInputSquared()
+	public boolean isJoystickInputSquared()
 	{
 		return joystickInputSquared;
 	}
-	public void joystickInputSquared(boolean joystickInputSquared)
+	public void setJoystickInputSquared(boolean joystickInputSquared)
 	{
 		this.joystickInputSquared = joystickInputSquared;
 	}
@@ -350,6 +358,14 @@ public abstract class BaseDriveTrain extends Subsystem {
 		for(int x = 0; x < motors.length; x++)
 		{
 			motors[x].setFeedbackDevice(encoder);
+		}
+	}
+	
+	public void setEncoderPulsePerRev(int pulsesPerRev)
+	{
+		for(int x = 0; x < motors.length; x++)
+		{
+			motors[x].setEncPulsesPerRev(pulsesPerRev);
 		}
 	}
 	

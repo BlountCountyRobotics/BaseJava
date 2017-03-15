@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  * robot with mecanum drive
  */
  
-public abstract class MecanumDrive extends BaseDriveTrain {
+public abstract class MecanumDrive extends BaseDriveTrain  {
 	
 	private boolean usingGyro;
 	private BCRGyro gyro;
@@ -40,6 +40,11 @@ public abstract class MecanumDrive extends BaseDriveTrain {
 	}
 	
 	public void mecanumDrive(BCRXbox controller)
+	{
+		input(controller);
+	}
+	
+	public void input(BCRXbox controller)
 	{
 		double x = controller.getX(Hand.kLeft);
 		double y = controller.getY(Hand.kLeft);

@@ -30,6 +30,11 @@ public abstract class ArcadeDrive extends BaseDriveTrain {
 	
 	public void arcadeDrive(BCRXbox controller)
 	{
+		input(controller);
+	}
+	
+	public void input(BCRXbox controller)
+	{
 		double move = controller.getY(Hand.kLeft);
 		double rotate = controller.getX(Hand.kLeft);
 		

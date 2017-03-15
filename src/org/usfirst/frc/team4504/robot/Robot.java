@@ -29,7 +29,7 @@ public class Robot extends IterativeRobot {
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	
 	BCRAHRS ahrs;
-	DriveTrain driveTrain = new DriveTrain();
+	public static DriveTrain driveTrain = new DriveTrain();
 	
 	/**
 	 * This function is run when the robot is first started up and should be
