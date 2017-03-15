@@ -361,7 +361,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		}
 	}
 	
-	public void setEncoderPulsePerRev(int pulsesPerRev)
+	public void setEncoderPulsesPerRev(int pulsesPerRev)
 	{
 		for(int x = 0; x < motors.length; x++)
 		{

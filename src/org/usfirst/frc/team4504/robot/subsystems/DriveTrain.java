@@ -18,11 +18,12 @@ public class DriveTrain extends MecanumDrive {
 	 
 	public DriveTrain()
 	{
-		// Set talon PIDF here (according to software reference guide)
+		// Set talon PIDF values here (according to software reference guide)
 		super(null, null, null, null);
 		this.setTriggerIncreasesSpeed(true);
 		this.setJoystickInputSquared(true);
 		this.setEncoder(FeedbackDevice.QuadEncoder);
+		this.setEncoderPulsesPerRev(256);
 	}
 	
     public void initDefaultCommand() {
