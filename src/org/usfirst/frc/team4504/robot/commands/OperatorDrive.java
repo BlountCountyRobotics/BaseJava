@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
  * the controller to the
  * DriveTrain
  */
-public class Drive extends Command {
+public class OperatorDrive extends Command {
 
-    public Drive() {
+    public OperatorDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);

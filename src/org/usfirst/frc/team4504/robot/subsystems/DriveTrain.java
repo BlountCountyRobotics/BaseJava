@@ -1,6 +1,6 @@
 package org.usfirst.frc.team4504.robot.subsystems;
 
-import org.usfirst.frc.team4504.robot.commands.Drive;
+import org.usfirst.frc.team4504.robot.commands.OperatorDrive;
 import org.usfirst.frc.team4504.robot.subsystems.drivetrain.MecanumDrive;
 
 import com.ctre.CANTalon.FeedbackDevice;
@@ -29,7 +29,7 @@ public class DriveTrain extends MecanumDrive {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new Drive());
+    	setDefaultCommand(new OperatorDrive());
     }
 
 }
