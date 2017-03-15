@@ -99,17 +99,17 @@ public abstract class MecanumDrive extends BaseDriveTrain  {
 			}
 		}
 		
-		set(Motors.frontRight,speeds[Motors.frontRight] * inverted[Motors.frontRight]);
-		set(Motors.backRight,speeds[Motors.backRight] * inverted[Motors.backRight]);
-		set(Motors.frontLeft,speeds[Motors.frontLeft] * inverted[Motors.frontLeft]);
-		set(Motors.backLeft,speeds[Motors.backLeft] * inverted[Motors.backLeft]);
+		setMotor(Motors.frontRight,speeds[Motors.frontRight] * inverted[Motors.frontRight]);
+		setMotor(Motors.backRight,speeds[Motors.backRight] * inverted[Motors.backRight]);
+		setMotor(Motors.frontLeft,speeds[Motors.frontLeft] * inverted[Motors.frontLeft]);
+		setMotor(Motors.backLeft,speeds[Motors.backLeft] * inverted[Motors.backLeft]);
 	}
 	
-	public boolean usingGyro()
+	public boolean isUsingGyro()
 	{
 		return usingGyro;
 	}
-	public void usingGyro(boolean usingGyro)
+	public void setUsingGyro(boolean usingGyro)
 	{
 		this.usingGyro = usingGyro;
 	}

@@ -60,7 +60,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 	protected boolean usingEncoders;
 	protected double rpm;
 	protected int numMotors;
-	protected int[] inverted;
+	protected double[] inverted;
 	public BaseDriveTrain(BCRTalon left, BCRTalon right)
 	{
 		super();
@@ -71,7 +71,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		motors[Motors.left] = left;
 		motors[Motors.right] = right;
 		
-		inverted = new int[] {1,1};
+		inverted = new double[] {1.0,1.0};
 		
 		
 		for(int x = 0; x < motors.length; x++)
@@ -97,7 +97,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		motors[Motors.frontLeft] = frontLeft;
 		motors[Motors.frontRight] = frontRight;
 		
-		inverted = new int[] {1,1,1,1};
+		inverted = new double[] {1.0,1.0,1.0,1.0};
 		
 		
 		for(int x = 0; x < motors.length; x++)
@@ -127,7 +127,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		motors[Motors.midLeft] = midLeft;
 		motors[Motors.midRight] = midRight;
 		
-		inverted = new int[] {1,1,1,1,1,1};
+		inverted = new double[] {1.0,1.0,1.0,1.0,1.0,1.0};
 		
 		
 		for(int x = 0; x < motors.length; x++)
@@ -206,19 +206,19 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		}
 		if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
 		{
-			set(Motors.backLeft,trueLeftOutput * inverted[Motors.backLeft]);
-			set(Motors.frontLeft,trueLeftOutput * inverted[Motors.frontLeft]);
-			set(Motors.backRight,trueRightOutput * inverted[Motors.backRight]);
-			set(Motors.frontRight,trueRightOutput * inverted[Motors.frontRight]);
+			setMotor(Motors.backLeft,trueLeftOutput * inverted[Motors.backLeft]);
+			setMotor(Motors.frontLeft,trueLeftOutput * inverted[Motors.frontLeft]);
+			setMotor(Motors.backRight,trueRightOutput * inverted[Motors.backRight]);
+			setMotor(Motors.frontRight,trueRightOutput * inverted[Motors.frontRight]);
 			if(driveType == DriveType.sixWheel)
 			{
-				set(Motors.midLeft,trueLeftOutput * inverted[Motors.midLeft]);
-				set(Motors.midRight,trueRightOutput * inverted[Motors.midRight]);
+				setMotor(Motors.midLeft,trueLeftOutput * inverted[Motors.midLeft]);
+				setMotor(Motors.midRight,trueRightOutput * inverted[Motors.midRight]);
 			}
 		}else if(driveType == DriveType.twoWheel)
 		{
-			set(Motors.left,trueLeftOutput * inverted[Motors.left]);
-			set(Motors.right,trueRightOutput * inverted[Motors.right]);
+			setMotor(Motors.left,trueLeftOutput * inverted[Motors.left]);
+			setMotor(Motors.right,trueRightOutput * inverted[Motors.right]);
 		}
 	}
 	
@@ -230,7 +230,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		}
 	}
 	
-	protected void set(int motor, double speed)
+	protected void setMotor(int motor, double speed)
 	{
 		//assuming all units pre-scaled
 		if(motor < numMotors)
@@ -259,7 +259,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 	{
 		this.usingEncoders = usingEncoders;
 	}
-	public int numMotors()
+	public int getNumMotors()
 	{
 		return numMotors;
 	}
@@ -267,7 +267,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 	public void setInverted(int motor, boolean inverted)
 	{
 		if(motor < numMotors)
-			this.inverted[motor] = inverted ? -1 : 1;
+			this.inverted[motor] = inverted ? -1.0 : 1.0;
 	}
 	
 	public void setEncInverted(int motor, boolean inverted)
@@ -276,16 +276,16 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 			motors[motor].reverseSensor(inverted);
 	}
 	
-	public boolean getInverted(int motor)
+	public boolean isInverted(int motor)
 	{
 		if(motor < numMotors)
 		{
-			return inverted[motor] == -1;
+			return inverted[motor] == -1.0;
 		}
 		return false;
 	}
 	
-	public int[] getInverted()
+	public double[] getInverted()
 	{
 		return inverted.clone();
 	}
@@ -369,7 +369,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		}
 	}
 	
-	public boolean triggerIncreasesSpeed()
+	public boolean getTriggerIncreasesSpeed()
 	{
 		return triggerIncreasesSpeed;
 	}
@@ -390,7 +390,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 	protected double effectWithTrigger(double input, BCRXbox controller)
 	{
 		double factor = 1.0;
-		factor -= 2 * eachTriggerEffect; // there are two triggers
+		factor -= 2.0 * eachTriggerEffect; // there are two triggers
 
 		factor += eachTriggerEffect * controller.getTriggerAxis(Hand.kLeft);
 		factor += eachTriggerEffect * controller.getTriggerAxis(Hand.kRight);
