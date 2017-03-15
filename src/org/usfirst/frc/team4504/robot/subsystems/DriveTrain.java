@@ -15,7 +15,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 public class DriveTrain extends MecanumDrive {
 
 	// Initialize talons here
-	
+	 
 	public DriveTrain()
 	{
 		// Set talon PIDF here (according to software reference guide)

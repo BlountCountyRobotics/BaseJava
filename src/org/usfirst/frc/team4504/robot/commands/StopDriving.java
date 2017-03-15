@@ -5,7 +5,9 @@ import org.usfirst.frc.team4504.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Toggled as a kill
+ * switch the driver
+ * can quickly use
  */
 public class StopDriving extends Command {
 

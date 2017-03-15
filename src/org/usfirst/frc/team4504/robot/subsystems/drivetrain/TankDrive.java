@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  * Extend this class for a
  * robot with tank drive
  */
-
+ 
 public abstract class TankDrive extends BaseDriveTrain {
 
 	public TankDrive(BCRTalon left, BCRTalon right)

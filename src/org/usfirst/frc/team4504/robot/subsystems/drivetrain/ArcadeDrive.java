@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 /**
  * Extend this class for a
  * robot with arcade drive
- */
+ */ 
 
 public abstract class ArcadeDrive extends BaseDriveTrain {
 	public ArcadeDrive(BCRTalon left, BCRTalon right)
