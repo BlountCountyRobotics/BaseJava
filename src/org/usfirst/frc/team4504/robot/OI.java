@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4504.robot;
 
 import org.usfirst.frc.team4504.robot.commands.StopDriving;
-import org.usfirst.frc.team4504.robot.objects.BCRDriverStation;
+import org.usfirst.frc.team4504.robot.objects.BCRDriverPanel;
 import org.usfirst.frc.team4504.robot.objects.BCRXbox;
 
 /**
@@ -13,7 +13,7 @@ import org.usfirst.frc.team4504.robot.objects.BCRXbox;
 public class OI {
 	
 	private BCRXbox controller = new BCRXbox(0);
-	private BCRDriverStation driverStation = new BCRDriverStation(1);
+	private BCRDriverPanel driverStation = new BCRDriverPanel(1);
 	
 	public OI()
 	{
@@ -24,7 +24,7 @@ public class OI {
 	{
 		return controller;
 	}
-	public BCRDriverStation getDriverStation()
+	public BCRDriverPanel getDriverStation()
 	{
 		return driverStation;
 	}

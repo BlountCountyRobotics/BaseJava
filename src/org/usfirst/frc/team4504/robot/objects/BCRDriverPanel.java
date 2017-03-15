@@ -3,9 +3,9 @@ package org.usfirst.frc.team4504.robot.objects;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-public class BCRDriverStation extends Joystick
+public class BCRDriverPanel extends Joystick
 {
-	public BCRDriverStation(int port)
+	public BCRDriverPanel(int port)
 	{
 		super(port);
 	}
