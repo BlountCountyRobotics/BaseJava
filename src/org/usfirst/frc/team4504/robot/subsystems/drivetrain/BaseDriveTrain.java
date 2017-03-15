@@ -392,10 +392,8 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		double factor = 1.0;
 		factor -= 2 * eachTriggerEffect; // there are two triggers
 
-		if(controller.getTriggerAxis(Hand.kLeft) >= .75)
-			factor += eachTriggerEffect;		
-		if(controller.getTriggerAxis(Hand.kRight) >= .75)
-			factor += eachTriggerEffect;
+		factor += eachTriggerEffect * controller.getTriggerAxis(Hand.kLeft);
+		factor += eachTriggerEffect * controller.getTriggerAxis(Hand.kRight);
 		
 		factor = limit(factor); //make sure it isn't below 0.0
 		return input * factor;
