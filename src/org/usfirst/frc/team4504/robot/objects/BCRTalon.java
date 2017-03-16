@@ -12,7 +12,7 @@ public class BCRTalon extends CANTalon {
 	
 	public void setEncPulsesPerRev(int pulsesPerRev)
 	{
-		this.pulsesPerRev = pulsesPerRev;
+		this.pulsesPerRev = pulsesPerRev * 4; // 4 edges per, so * 4
 	}
 	
 	public void setRPM(double rpm)
@@ -47,7 +47,7 @@ public class BCRTalon extends CANTalon {
 	
 	public double RPMToNative(double rpm)
 	{
-		return rpm * (1.0 / 60.0) * (1.0 / 10.0) * (double)pulsesPerRev;
+		return rpm * (1.0 / 60.0) * (1.0 / 10.0) * ((double)pulsesPerRev);
 		// rotations/minute * min/sec * sec/100ms * native/rotation = native/100ms (native)
 	}
 	
