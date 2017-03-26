@@ -36,19 +36,9 @@ public abstract class TankDrive extends BaseDriveTrain {
 	
 	public void input(BCRXbox controller)
 	{
-		double left = controller.getX(Hand.kLeft);
-		double right = controller.getX(Hand.kRight);
-		if(joystickInputSquared)
-		{
-			left = squareWithSign(left);
-			right = squareWithSign(right);
-		}
-		
-		if(triggerIncreasesSpeed)
-		{
-			left = effectWithTrigger(left, controller);
-			right = effectWithTrigger(right, controller);
-		}
+		double left  = getJoystickInput(controller.getX(Hand.kLeft), controller);
+		double right = getJoystickInput(controller.getX(Hand.kRight), controller);
+
 		
 		tankDrive(left, right);
 	}

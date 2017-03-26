@@ -46,23 +46,9 @@ public abstract class MecanumDrive extends BaseDriveTrain  {
 	
 	public void input(BCRXbox controller)
 	{
-		double x = controller.getX(Hand.kLeft);
-		double y = controller.getY(Hand.kLeft);
-		double rotation = controller.getX(Hand.kRight);
-		if(joystickInputSquared)
-		{
-			x = squareWithSign(x);
-			y = squareWithSign(y);
-			rotation = squareWithSign(rotation);
-		}
-		
-		if(triggerIncreasesSpeed)
-		{
-			x = effectWithTrigger(x, controller);
-			y = effectWithTrigger(y, controller);
-			rotation = effectWithTrigger(rotation, controller);
-		}
-		
+		double x = getJoystickInput(controller.getX(Hand.kLeft), controller);
+		double y = getJoystickInput(controller.getY(Hand.kLeft), controller);
+		double rotation = getJoystickInput(controller.getX(Hand.kRight), controller);
 		mecanumDrive(x, y, rotation);
 	}
 	
@@ -85,10 +71,10 @@ public abstract class MecanumDrive extends BaseDriveTrain  {
 		}
 		
 		double speeds[] = new double[numMotors];
-		speeds[Motors.frontLeft] = xInput + yInput + rotation;
-		speeds[Motors.frontRight] = -xInput + yInput - rotation;
-		speeds[Motors.backLeft] = -xInput + yInput + rotation;
-		speeds[Motors.backRight] = xInput + yInput - rotation;
+		speeds[Motors.frontLeft.value] = xInput + yInput + rotation;
+		speeds[Motors.frontRight.value] = -xInput + yInput - rotation;
+		speeds[Motors.backLeft.value] = -xInput + yInput + rotation;
+		speeds[Motors.backRight.value] = xInput + yInput - rotation;
 		normalize(speeds);
 		if(usingEncoders)
 		{
@@ -99,10 +85,10 @@ public abstract class MecanumDrive extends BaseDriveTrain  {
 			}
 		}
 		
-		setMotor(Motors.frontRight,speeds[Motors.frontRight] * inverted[Motors.frontRight]);
-		setMotor(Motors.backRight,speeds[Motors.backRight] * inverted[Motors.backRight]);
-		setMotor(Motors.frontLeft,speeds[Motors.frontLeft] * inverted[Motors.frontLeft]);
-		setMotor(Motors.backLeft,speeds[Motors.backLeft] * inverted[Motors.backLeft]);
+		setMotor(Motors.frontRight,speeds[Motors.frontRight.value] * inverted[Motors.frontRight.value]);
+		setMotor(Motors.backRight,speeds[Motors.backRight.value] * inverted[Motors.backRight.value]);
+		setMotor(Motors.frontLeft,speeds[Motors.frontLeft.value] * inverted[Motors.frontLeft.value]);
+		setMotor(Motors.backLeft,speeds[Motors.backLeft.value] * inverted[Motors.backLeft.value]);
 	}
 	
 	public boolean isUsingGyro()

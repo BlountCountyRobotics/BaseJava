@@ -123,7 +123,7 @@ public class Robot extends IterativeRobot {
 	
 	private void sendSmartDashboardValues()
 	{
-		int driveType = driveTrain.getDriveType();
+		DriveType driveType = driveTrain.getDriveType();
 		if(RobotMap.encodersAvailable)
 		{
 			if(driveType == DriveType.twoWheel)
@@ -161,7 +161,7 @@ public class Robot extends IterativeRobot {
 		{
 			SmartDashboard.putNumber("Front left output", 
 					driveTrain.getMotorOutput(Motors.frontLeft));
-			SmartDashboard.putNumber("Front right output", 
+			SmartDashboard.putNumber("Front right output",  
 					driveTrain.getMotorOutput(Motors.frontRight));
 			SmartDashboard.putNumber("Back left output", 
 					driveTrain.getMotorOutput(Motors.backLeft));

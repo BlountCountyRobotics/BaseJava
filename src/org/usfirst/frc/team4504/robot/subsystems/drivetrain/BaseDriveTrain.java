@@ -27,35 +27,45 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTrain {
 	
-	public class DriveType
+	public static class DriveType
 	{
-		public static final int fourWheel = 1;
-		public static final int sixWheel = 2;
-		public static final int twoWheel = 3;
+		int value;
+		public static final DriveType fourWheel = new DriveType(1);
+		public static final DriveType sixWheel = new DriveType(2);
+		public static final DriveType twoWheel = new DriveType(3);
+		private DriveType(int value)
+		{
+			this.value = value;
+		}
 	}
 	
-	public class Motors
+	public static class Motors
 	{
+		int value;
 		// for two motors
-		public static final int right = 0;
-		public static final int left = 1;
+		public static final Motors right = new Motors(0);
+		public static final Motors left = new Motors(1);
 		
 		// for four and six
-		public static final int frontRight = 0;
-		public static final int backRight = 2;
-		public static final int frontLeft = 1;
-		public static final int backLeft = 3;
+		public static final Motors frontRight = new Motors(0);
+		public static final Motors backRight = new Motors(2);
+		public static final Motors frontLeft = new Motors(1);
+		public static final Motors backLeft = new Motors(3);
 		
 		// for six 
-		public static final int midRight = 4;
-		public static final int midLeft = 5;
+		public static final Motors midRight = new Motors(4);
+		public static final Motors midLeft = new Motors(5);
+		private Motors(int value)
+		{
+			this.value = value;
+		}
 	}
 
 	protected boolean triggerIncreasesSpeed = true;
 	protected double eachTriggerEffect = .2;
 	
 	protected boolean joystickInputSquared = true;
-	protected int driveType;
+	protected DriveType driveType;
 	protected BCRTalon[] motors;
 	protected boolean usingEncoders;
 	protected double rpm;
@@ -68,8 +78,8 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		numMotors = 2;
 		motors = new BCRTalon[numMotors];
 		usingEncoders = false;
-		motors[Motors.left] = left;
-		motors[Motors.right] = right;
+		motors[Motors.left.value] = left;
+		motors[Motors.right.value] = right;
 		
 		inverted = new double[] {1.0,1.0};
 		
@@ -92,10 +102,10 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		numMotors = 4;
 		motors = new BCRTalon[numMotors];
 		usingEncoders = false;
-		motors[Motors.backLeft] = backLeft;
-		motors[Motors.backRight] = backRight;
-		motors[Motors.frontLeft] = frontLeft;
-		motors[Motors.frontRight] = frontRight;
+		motors[Motors.backLeft.value] = backLeft;
+		motors[Motors.backRight.value] = backRight;
+		motors[Motors.frontLeft.value] = frontLeft;
+		motors[Motors.frontRight.value] = frontRight;
 		
 		inverted = new double[] {1.0,1.0,1.0,1.0};
 		
@@ -120,12 +130,12 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		numMotors = 6;
 		motors = new BCRTalon[numMotors];
 		usingEncoders = false;
-		motors[Motors.backLeft] = backLeft;
-		motors[Motors.backRight] = backRight;
-		motors[Motors.frontLeft] = frontLeft;
-		motors[Motors.frontRight] = frontRight;
-		motors[Motors.midLeft] = midLeft;
-		motors[Motors.midRight] = midRight;
+		motors[Motors.backLeft.value] = backLeft;
+		motors[Motors.backRight.value] = backRight;
+		motors[Motors.frontLeft.value] = frontLeft;
+		motors[Motors.frontRight.value] = frontRight;
+		motors[Motors.midLeft.value] = midLeft;
+		motors[Motors.midRight.value] = midRight;
 		
 		inverted = new double[] {1.0,1.0,1.0,1.0,1.0,1.0};
 		
@@ -206,19 +216,19 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		}
 		if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
 		{
-			setMotor(Motors.backLeft,trueLeftOutput * inverted[Motors.backLeft]);
-			setMotor(Motors.frontLeft,trueLeftOutput * inverted[Motors.frontLeft]);
-			setMotor(Motors.backRight,trueRightOutput * inverted[Motors.backRight]);
-			setMotor(Motors.frontRight,trueRightOutput * inverted[Motors.frontRight]);
+			setMotor(Motors.backLeft,trueLeftOutput * inverted[Motors.backLeft.value]);
+			setMotor(Motors.frontLeft,trueLeftOutput * inverted[Motors.frontLeft.value]);
+			setMotor(Motors.backRight,trueRightOutput * inverted[Motors.backRight.value]);
+			setMotor(Motors.frontRight,trueRightOutput * inverted[Motors.frontRight.value]);
 			if(driveType == DriveType.sixWheel)
 			{
-				setMotor(Motors.midLeft,trueLeftOutput * inverted[Motors.midLeft]);
-				setMotor(Motors.midRight,trueRightOutput * inverted[Motors.midRight]);
+				setMotor(Motors.midLeft,trueLeftOutput * inverted[Motors.midLeft.value]);
+				setMotor(Motors.midRight,trueRightOutput * inverted[Motors.midRight.value]);
 			}
 		}else if(driveType == DriveType.twoWheel)
 		{
-			setMotor(Motors.left,trueLeftOutput * inverted[Motors.left]);
-			setMotor(Motors.right,trueRightOutput * inverted[Motors.right]);
+			setMotor(Motors.left,trueLeftOutput * inverted[Motors.left.value]);
+			setMotor(Motors.right,trueRightOutput * inverted[Motors.right.value]);
 		}
 	}
 	
@@ -230,23 +240,23 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		}
 	}
 	
-	protected void setMotor(int motor, double speed)
+	protected void setMotor(Motors motor, double speed)
 	{
 		//assuming all units pre-scaled
-		if(motor < numMotors)
+		if(motor.value < numMotors)
 		{
 			if(usingEncoders)
 			{
-				motors[motor].setRPM(speed);
+				motors[motor.value].setRPM(speed);
 			}else
 			{
-				motors[motor].setPercent(speed);
+				motors[motor.value].setPercent(speed);
 			}
 		}
 	}
 	
 	
-	public int getDriveType() {
+	public DriveType getDriveType() {
 		return driveType;
 	}
 	
@@ -398,22 +408,44 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 		factor = limit(factor); //make sure it isn't below 0.0
 		return input * factor;
 	}
-	public BCRTalon getMotor(int motor)
+	public BCRTalon getMotor(Motors motor)
 	{
-		if(motor < numMotors)
-			return motors[motor];
+		if(motor.value < numMotors)
+			return motors[motor.value];
 		return null;
 	}
-	public double getMotorRPM(int motor)
+	public double getMotorRPM(Motors motor)
 	{
-		if(motor < numMotors)
-			return motors[motor].getRPM();
+		if(motor.value < numMotors)
+			return motors[motor.value].getRPM();
 		return 0.0;
 	}
-	public double getMotorOutput(int motor)
+	protected double[] getJoystickInputs(double[] inputs, BCRXbox controller)
 	{
-		if(motor < numMotors)
-			return motors[motor].getOutputVoltage() / motors[motor].getBusVoltage();
+		double[] outputs = new double[inputs.length];
+		for(int x = 0; x < inputs.length; x++)
+		{
+			outputs[x] = getJoystickInput(inputs[x], controller);
+		}
+		return outputs;
+	}
+	protected double getJoystickInput(double input, BCRXbox controller)
+	{
+		if(joystickInputSquared)
+		{
+			input = squareWithSign(input);
+		}
+		
+		if(triggerIncreasesSpeed)
+		{
+			input = effectWithTrigger(input, controller);
+		}
+		return input;
+	}
+	public double getMotorOutput(Motors motor)
+	{
+		if(motor.value < numMotors)
+			return motors[motor.value].getOutputVoltage() / motors[motor.value].getBusVoltage();
 		return 0.0;
 	}
 }

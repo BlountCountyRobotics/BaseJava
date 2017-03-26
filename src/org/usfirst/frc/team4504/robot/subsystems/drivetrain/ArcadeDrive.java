@@ -35,23 +35,9 @@ public abstract class ArcadeDrive extends BaseDriveTrain {
 	
 	public void input(BCRXbox controller)
 	{
-		double move = controller.getY(Hand.kLeft);
-		double rotate = controller.getX(Hand.kLeft);
+		double move = getJoystickInput(controller.getY(Hand.kLeft), controller);
+		double rotate = getJoystickInput(controller.getX(Hand.kLeft), controller);
 		
-		move = limit(move);
-		rotate = limit(rotate);
-		
-		if(joystickInputSquared)
-		{
-			move = squareWithSign(move);
-			rotate = squareWithSign(rotate);
-		}
-		
-		if(triggerIncreasesSpeed)
-		{
-			move = effectWithTrigger(move, controller);
-			rotate = effectWithTrigger(rotate, controller);
-		}
 		arcadeDrive(move, rotate);
 	}
 	
