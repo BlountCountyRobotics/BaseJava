@@ -2,6 +2,7 @@
 package org.usfirst.frc.team4504.robot;
 
 import org.usfirst.frc.team4504.robot.objects.BCRAHRS;
+import org.usfirst.frc.team4504.robot.objects.BCRTalon;
 import org.usfirst.frc.team4504.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4504.robot.subsystems.drivetrain.BaseDriveTrain.DriveType;
 import org.usfirst.frc.team4504.robot.subsystems.drivetrain.BaseDriveTrain.Motors;
@@ -124,31 +125,19 @@ public class Robot extends IterativeRobot {
 	private void sendSmartDashboardValues()
 	{
 		DriveType driveType = driveTrain.getDriveType();
-		if(RobotMap.encodersAvailable)
+		BCRTalon motors[] = driveTrain.getMotors();
+		for(int x = 0; x < motors.length; x++)
 		{
-			if(driveType == DriveType.twoWheel)
+			String name = motors[x].getName();
+			
+			if(RobotMap.driveTrainEncodersExist)
 			{
-				SmartDashboard.putNumber("Left side RPM", 
-						driveTrain.getMotorRPM(Motors.left));
-				SmartDashboard.putNumber("Right side RPM", 
-						driveTrain.getMotorRPM(Motors.right));
-			}else if(driveType == DriveType.fourWheel || driveType == DriveType.sixWheel)
-			{
-				SmartDashboard.putNumber("Front left RPM", 
-						driveTrain.getMotorRPM(Motors.frontLeft));
-				SmartDashboard.putNumber("Front right RPM", 
-						driveTrain.getMotorRPM(Motors.frontRight));
-				SmartDashboard.putNumber("Back left RPM", 
-						driveTrain.getMotorRPM(Motors.backLeft));
-				SmartDashboard.putNumber("Back right RPM", 
-						driveTrain.getMotorRPM(Motors.backRight));
-				if(driveType == DriveType.sixWheel)
-				{
-					SmartDashboard.putNumber("Middle left RPM", 
-							driveTrain.getMotorRPM(Motors.midLeft));
-					SmartDashboard.putNumber("Middle right RPM", 
-							driveTrain.getMotorRPM(Motors.midRight));
-				}
+				double rpm = motors[x].getRPM();
+				double error = motors[x].getClosedLoopRPMError();
+				double target = motors[x].getSetpoint();
+				SmartDashboard.putNumber(name + " target rpm", target);
+				SmartDashboard.putNumber(name + " true rpm", rpm);
+				SmartDashboard.putNumber(name + " error", error);
 			}
 		}
 		if(driveType == DriveType.twoWheel)
@@ -174,6 +163,7 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.putNumber("Middle right output", 
 						driveTrain.getMotorOutput(Motors.midRight));
 			}
+			
 		}
 		SmartDashboard.putBoolean("isMagneticDisturbance()", ahrs.isMagneticDisturbance());
 		SmartDashboard.putBoolean("isConnected()", ahrs.isConnected());

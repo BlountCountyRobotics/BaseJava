@@ -20,7 +20,7 @@ public class RobotMap {
 	public static final Port ahrsPort = Port.kOnboardCS0;
 	
 	// Global variables:
-	public static final boolean encodersAvailable = false;
+	public static final boolean driveTrainEncodersExist = false;
 	public static final int encoderType = 0;
 	public static final int pulsesPerRev = 128;
 	public class EncoderType

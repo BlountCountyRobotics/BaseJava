@@ -5,9 +5,20 @@ import com.ctre.CANTalon;
 public class BCRTalon extends CANTalon {
 	
 	int pulsesPerRev;
+	String name;
 	
 	public BCRTalon(int deviceNumber) {
 		super(deviceNumber);
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 	
 	public void setEncPulsesPerRev(int pulsesPerRev)
@@ -55,6 +66,11 @@ public class BCRTalon extends CANTalon {
 	{
 		return nativeUnits * 10.0 * 60.0 * (1.0 / (double)pulsesPerRev);
 		// native/100ms * 100ms/sec * sec/minute * rotation/native = rotation/minute (rpm)
+	}
+	
+	public int getClosedLoopRPMError()
+	{
+		return (int)nativeToRPM(getClosedLoopError());
 	}
 	
 	// Don't use API scaling; inconsistent

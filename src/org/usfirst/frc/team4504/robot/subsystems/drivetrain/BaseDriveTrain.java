@@ -448,4 +448,8 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 			return motors[motor.value].getOutputVoltage() / motors[motor.value].getBusVoltage();
 		return 0.0;
 	}
+	public BCRTalon[] getMotors()
+	{
+		return motors;
+	}
 }
