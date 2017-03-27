@@ -11,7 +11,7 @@ public abstract class Octocanum extends MecanumDrive {
 
 	private OctonacumMode mode;
 	private Solenoid[] solenoids;
-	
+	private boolean mecanumDoesUseEncoders;
 	
 	public static class OctocanumMode
 	{
@@ -29,14 +29,15 @@ public abstract class Octocanum extends MecanumDrive {
 	
 	public Octocanum(BCRTalon frontLeft, BCRTalon backLeft, 
 			BCRTalon frontRight, BCRTalon backRight, 
-			BCRGyro gyro, Solenoid[] solenoids) {
+			BCRGyro gyro, Solenoid[] solenoids,
+			boolean mecanumEncoder) {
 		super(frontLeft, backLeft, frontRight, backRight, gyro);
 		this.solenoids = solenoids;
 	}
 	
 	public Octocanum(BCRTalon frontLeft, BCRTalon backLeft, 
 			BCRTalon frontRight, BCRTalon backRight,
-			Solenoid[] solenoids) {
+			Solenoid[] solenoids, boolean mecanumEncoder) {
 		super(frontLeft, backLeft, frontRight, backRight);
 		this.solenoids = solenoids;
 	}
@@ -47,11 +48,20 @@ public abstract class Octocanum extends MecanumDrive {
 		{
 			setSolenoids(false);
 			this.mode = mode;
+			usingEncoders = mecanumDoesUseEncoders;
+			
 		}else if(mode == OctocanumMode.tank)
 		{
 			setSolenoids(true);
 			this.mode = mode;
+			usingEncoders = false;
 		}
+	}
+	
+	public void isUsingEncoders(boolean usingEncoders)
+	{
+		super.isUsingEncoders(usingEncoders);
+		mecanumDoesUseEncoders = usingEncoders;
 	}
 	
 	private void setSolenoids(boolean input)
