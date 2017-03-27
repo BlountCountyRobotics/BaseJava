@@ -7,47 +7,47 @@ import org.usfirst.frc.team4504.robot.objects.BCRXbox;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
-public abstract class Octonacum extends MecanumDrive {
+public abstract class Octocanum extends MecanumDrive {
 
 	private OctonacumMode mode;
 	private Solenoid[] solenoids;
 	
 	
-	public static class OctonacumMode
+	public static class OctocanumMode
 	{
 		int value;
 		
-		public static final OctonacumMode mecanum = new OctonacumMode(0);
-		public static final OctonacumMode tank = new OctonacumMode(1);
+		public static final OctocanumMode mecanum = new OctonacumMode(0);
+		public static final OctocanumMode tank = new OctonacumMode(1);
 
 		
-		private OctonacumMode(int value)
+		private OctocanumMode(int value)
 		{
 			this.value = value;
 		}
 	}
 	
-	public Octonacum(BCRTalon frontLeft, BCRTalon backLeft, 
+	public Octocanum(BCRTalon frontLeft, BCRTalon backLeft, 
 			BCRTalon frontRight, BCRTalon backRight, 
 			BCRGyro gyro, Solenoid[] solenoids) {
 		super(frontLeft, backLeft, frontRight, backRight, gyro);
 		this.solenoids = solenoids;
 	}
 	
-	public Octonacum(BCRTalon frontLeft, BCRTalon backLeft, 
+	public Octocanum(BCRTalon frontLeft, BCRTalon backLeft, 
 			BCRTalon frontRight, BCRTalon backRight,
 			Solenoid[] solenoids) {
 		super(frontLeft, backLeft, frontRight, backRight);
 		this.solenoids = solenoids;
 	}
 
-	public void switchMode(OctonacumMode mode)
+	public void switchMode(OctocanumMode mode)
 	{
-		if(mode == OctonacumMode.mecanum)
+		if(mode == OctocanumMode.mecanum)
 		{
 			setSolenoids(false);
 			this.mode = mode;
-		}else if(mode == OctonacumMode.tank)
+		}else if(mode == OctocanumMode.tank)
 		{
 			setSolenoids(true);
 			this.mode = mode;
@@ -68,7 +68,7 @@ public abstract class Octonacum extends MecanumDrive {
 		
 	}
 	
-	public void octonacum(BCRXbox controller)
+	public void octocanum(BCRXbox controller)
 	{
 		input(controller);
 	}
