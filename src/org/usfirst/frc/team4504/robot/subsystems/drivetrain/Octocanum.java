@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 public abstract class Octocanum extends MecanumDrive {
 
-	private OctonacumMode mode;
+	private OctocanumMode mode;
 	private Solenoid[] solenoids;
 	private boolean mecanumDoesUseEncoders;
 	
@@ -17,8 +17,8 @@ public abstract class Octocanum extends MecanumDrive {
 	{
 		int value;
 		
-		public static final OctocanumMode mecanum = new OctonacumMode(0);
-		public static final OctocanumMode tank = new OctonacumMode(1);
+		public static final OctocanumMode mecanum = new OctocanumMode(0);
+		public static final OctocanumMode tank = new OctocanumMode(1);
 
 		
 		private OctocanumMode(int value)
@@ -90,10 +90,10 @@ public abstract class Octocanum extends MecanumDrive {
 		double xRight = getJoystickInput(controller.getX(Hand.kRight), controller);
 		double yRight = getJoystickInput(controller.getY(Hand.kRight), controller);
 		
-		if(mode == OctonacumMode.mecanum)
+		if(mode == OctocanumMode.mecanum)
 		{
 			mecanumDrive(xLeft, yLeft, xRight);
-		}else if(mode == OctonacumMode.tank)
+		}else if(mode == OctocanumMode.tank)
 		{
 			tankDrive(yLeft, yRight);
 		}
