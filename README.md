@@ -1,8 +1,8 @@
-### Base code 2017
+# Base code 2017
 
 ## NOTE: ALL OF THIS CODE IS COMPLETELY UNTESTED
   
-# Used by team 4504's programmers a base for every year's code.
+### Used by team 4504's programmers a base for every year's code.
 
 Currently a WIP, but when finished the Drive Train should be mostly premade for most years (unless it uses an odd system). All you would have to do is create a DriveTrain class and extend whichever drive train you're using and set a default command, inputting the talons. As well, the SmartDashboard will be populated and premade objects with useful functions are made for things you use every year.
 
