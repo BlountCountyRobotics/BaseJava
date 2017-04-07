@@ -4,6 +4,7 @@ import org.usfirst.frc.team4504.robot.objects.BCRTalon;
 import org.usfirst.frc.team4504.robot.objects.BCRXbox;
 
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -122,6 +123,33 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 	
 
 	
+	public void driveToDistance(double inches)
+	{
+		if(usingEncoders == false)
+			return;
+		
+		motors[0].changeControlMode(TalonControlMode.Position);
+		for(int x = 1; x < motors.length; x++)
+		{
+			motors[x].changeControlMode(TalonControlMode.Follower);
+		}
+		
+		
+		
+		motors[0].set(inchesToRotations(inches));
+		for(int x = 1; x < motors.length; x++)
+		{
+			motors[x].set(motors[0].getDeviceID());
+		}
+		
+	}
+	
+	
+	private double inchesToRotations(double inches)
+	{
+		return inches; //TODO: get real size
+	}
+	
 	public BaseDriveTrain(BCRTalon frontLeft, BCRTalon midLeft, 
 			BCRTalon backLeft, BCRTalon frontRight, 
 			BCRTalon midRight, BCRTalon backRight)
@@ -199,6 +227,7 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 	}
 	
 	
+	
 	public void setLeftRight(double left, double right)
 	{
 		if(nullMotorCheck() == true)
@@ -256,7 +285,8 @@ public abstract class BaseDriveTrain extends Subsystem implements UsableDriveTra
 	}
 	
 	
-	public DriveType getDriveType() {
+	public DriveType getDriveType() 
+	{
 		return driveType;
 	}
 	
